@@ -1,3 +1,7 @@
-from modules.getClients import searchName
+from tabulate import tabulate
+import modules.getClients as cliente
 
-searchName()
+print(cliente.getOneClienteCodigo(3))
+#head = ["Codigo", "Nombre","",""]
+#headers=head
+print(tabulate(cliente.getOneClienteCodigo("3"), tablefmt="grid"))
