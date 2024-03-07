@@ -52,3 +52,13 @@ def getClientName(letraInicial):
         nombreDataDividido = ""
     return clienteName 
 
+def getCountry(pais):
+    clientePais = []
+    for i, val in enumerate(cli.cliente):
+        if (val.get("pais") == pais):
+            clientePais.append({
+                "clave": i,
+                "nombre": val.get("nombre_cliente"),
+                "pais": val.get("pais")
+            })
+    return clientePais       
