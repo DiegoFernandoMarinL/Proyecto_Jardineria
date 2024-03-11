@@ -1,3 +1,4 @@
+from tabulate import tabulate
 import storage.cliente as cli
 
 def getAllClienteName():
@@ -62,3 +63,40 @@ def getCountry(pais):
                 "pais": val.get("pais")
             })
     return clientePais       
+
+def menu():
+    print(f"""
+        
+        --- Menu Principal ---
+        
+        1. Obtener todos los clientes codigo y nombre
+        2. Obtener cliente por codigo
+        3. Obtener clientes por limite de credito
+        4. Obtener clientes por pais ciudad region
+        5. Obtener clientes por pais limite de credito
+        6. Obtener clientes por letra inicial
+        7. Obtener clientes por pais
+        """)
+    
+    op = input("Seleccione una opcion: ")
+    
+    if op == "1":
+        print(tabulate(getAllClienteName(),headers="keys",tablefmt="github"))
+    elif op == "2":
+        codigo = int(input("Digite el codigo del cliente: "))
+        print(tabulate(getOneClienteCodigo(codigo),headers="keys",tablefmt="github"))
+    elif op == "3":
+        credito = int(input("Digite limete de credito: "))
+        print(tabulate(getClientCredito(credito),headers="keys",tablefmt="github")) 
+    elif op == "4":
+        pais = input("Pais: ")
+        ciudad = input("Ciudad: ")
+        region = input("Region: ")
+        print(tabulate(getClientPaisCiudadRegion(pais,ciudad,region),headers="keys",tablefmt="github")) 
+    elif op == "5":
+        print(tabulate(getClientPaisCredito(),headers="keys",tablefmt="github"))
+    elif op == "6":
+        print(tabulate(getClientName(),headers="keys",tablefmt="github")) 
+    elif op == "7":
+        print(tabulate(getCountry(),headers="keys",tablefmt="github")) 
+                                 

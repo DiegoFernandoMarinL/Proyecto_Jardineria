@@ -1,3 +1,4 @@
+from tabulate import tabulate
 import storage.empleado as emp
 
 def getCodManager(codigoJefe):
@@ -34,3 +35,18 @@ def getPlacework(puesto):
                 "cargo": val.get("puesto") 
             })  
     return puestos         
+
+def menu():
+    print(f"""
+        
+        --- Menu Principal ---
+        
+        1. Obtener empleados por codigo de jefe
+        2. Obtener datos del jefe actual
+        3. Obtener empleados por puesto de trabajo
+        """)
+    
+    op = input("Seleccione una opcion: ")
+    
+    if op == "1":
+        print(tabulate(getAllClienteName(),headers="keys",tablefmt="github"))
