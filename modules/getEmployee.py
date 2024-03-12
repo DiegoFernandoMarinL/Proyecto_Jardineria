@@ -13,10 +13,10 @@ def getCodManager(codigoJefe):
             jefeCod.append(addEmployee)  
     return jefeCod
 
-def getManagerGeneral(codigoJefe):
+def getManagerGeneral():
     jefeCod = []
     for val in emp.empleado:
-        if (val.get("codigo_jefe") == codigoJefe):
+        if (val.get("codigo_jefe") == None):
             jefeCod.append({
                 "cargo": val.get("puesto"),
                 "nombre": val.get("nombre"),
@@ -28,7 +28,7 @@ def getManagerGeneral(codigoJefe):
 def getPlacework(puesto):
     puestos = []
     for val in emp.empleado:
-        if (val.get("puesto") != puesto):
+        if (val.get("puesto") == puesto):
             puestos.append({
                 "nombre": val.get("nombre"),
                 "apellidos": f'{val.get("apellido1")} {val.get("apellido2")}',
@@ -37,16 +37,29 @@ def getPlacework(puesto):
     return puestos         
 
 def menu():
-    print(f"""
+    flag=1
+    while flag == 1:
+        print(f"""
+            --- Reportes ---
+            
+            1. Obtener empleados por codigo de jefe
+            2. Obtener datos del jefe actual
+            3. Obtener empleados por puesto de trabajo
+            0. Menu principal  
+            """)
         
-        --- Menu Principal ---
+        op = input("Seleccione una opcion: ")
         
-        1. Obtener empleados por codigo de jefe
-        2. Obtener datos del jefe actual
-        3. Obtener empleados por puesto de trabajo
-        """)
-    
-    op = input("Seleccione una opcion: ")
-    
-    if op == "1":
-        print(tabulate(getAllClienteName(),headers="keys",tablefmt="github"))
+        if op == "1":
+            codigoJefe = int(input("Digite codigo del jefe: "))
+            print(tabulate(getCodManager(codigoJefe),headers="keys",tablefmt="github"))
+            flag = int(input("Desea realizar otra consulta: 1=Si  0=No: ")) 
+        elif op == "2":
+            print(tabulate(getManagerGeneral(),headers="keys",tablefmt="github"))
+            flag = int(input("Desea realizar otra consulta: 1=Si  0=No: "))
+        elif op == "3":
+            puesto = input("Escriba cargo del empleado: ")
+            print(tabulate(getPlacework(puesto),headers="keys",tablefmt="github"))
+            flag = int(input("Desea realizar otra consulta: 1=Si  0=No: "))
+        elif op == "0":
+            return
