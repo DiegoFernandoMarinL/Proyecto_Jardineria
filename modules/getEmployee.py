@@ -1,5 +1,11 @@
 from tabulate import tabulate
+import json
 import storage.empleado as emp
+import modules.postEmployee as pstEmpl
+
+#-----
+#falta el def
+#-----
 
 def getCodManager(codigoJefe):
     jefeCod = []
@@ -45,6 +51,7 @@ def menu():
             1. Obtener empleados por codigo de jefe
             2. Obtener datos del jefe actual
             3. Obtener empleados por puesto de trabajo
+            4. Anexar empleado
             0. Menu principal  
             """)
         
@@ -61,5 +68,19 @@ def menu():
             puesto = input("Escriba cargo del empleado: ")
             print(tabulate(getPlacework(puesto),headers="keys",tablefmt="github"))
             flag = int(input("Desea realizar otra consulta: 1=Si  0=No: "))
+        elif op == "4":
+            newEmpleado = {
+                "codigo_empleado": int(input("Codigo de empleado: ")),
+                "nombre": input("Nombre empleado: "),
+                "apellido1": input("Primer apellido"),
+                "apellido2": input("Segundo apellido"),
+                "extension": input("Extension: "),
+                "email": input("Email: "),
+                "codigo_oficina": input("Codigo oficina: "),
+                "codigo_jefe": input("Codigo jefe: "),
+                "puesto": "Cargo: "    
+            }
+            pstEmpl.postEmpleado(newEmpleado)
+            print("Empleado Guardado")
         elif op == "0":
             return
