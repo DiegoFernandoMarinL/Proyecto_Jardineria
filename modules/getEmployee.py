@@ -69,18 +69,6 @@ def menu():
             print(tabulate(getPlacework(puesto),headers="keys",tablefmt="github"))
             flag = int(input("Desea realizar otra consulta: 1=Si  0=No: "))
         elif op == "4":
-            newEmpleado = {
-                "codigo_empleado": int(input("Codigo de empleado: ")),
-                "nombre": input("Nombre empleado: "),
-                "apellido1": input("Primer apellido"),
-                "apellido2": input("Segundo apellido"),
-                "extension": input("Extension: "),
-                "email": input("Email: "),
-                "codigo_oficina": input("Codigo oficina: "),
-                "codigo_jefe": input("Codigo jefe: "),
-                "puesto": "Cargo: "    
-            }
-            pstEmpl.postEmpleado(newEmpleado)
-            print("Empleado Guardado")
+            
         elif op == "0":
             return

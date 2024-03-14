@@ -1,11 +1,38 @@
+import os
 import modules.getClients as cliente
 import modules.getOffice as office
 import modules.getEmployee as employee
 import modules.getOrder as order
+i
 
+def menuCliente():
+    flag = 1
+    while flag == 1:
+        os.system("clear")
+        print(f"""
+            --- Bienvenido al menu de clientes ---
+            
+            1. Reportes de clientes
+            2. Guardar, actualizar y eliminar clientes
+            0. Regresar al menu principal
+            """)
+        
+        op = input("Seleccione una opcion: ")
+        
+        if op == "1":
+            cliente.menu()
+        elif op == "2":    
+            employee.menu()
+        elif op == "0":
+            flag = 0    
+        else:
+            print("No es una opcion valida")
+    
+    
 if (__name__=="__main__"):
     flag = 1
     while flag == 1:
+        os.system("clear")
         print(f"""
             --- Menu Principal ---
             
@@ -21,7 +48,7 @@ if (__name__=="__main__"):
         op = input("Seleccione una opcion: ")
         
         if op == "1":
-            cliente.menu()
+            menuCliente()
         elif op == "2":    
             employee.menu()
         elif op == "3":    
