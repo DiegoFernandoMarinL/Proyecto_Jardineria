@@ -1,6 +1,5 @@
 import os
 import json
-
 from tabulate import tabulate
 
 def postEmpleado():

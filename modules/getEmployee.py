@@ -1,10 +1,11 @@
 from tabulate import tabulate
 import json
+import os
+import requests
 
 def getAllData():
-    import requests
     #json-server storage/empleado.json -b 5501
-    peticion = requests.get("http://192.168.0.11:5501")
+    peticion = requests.get("http://172.16.106.162:5501")
     data = peticion.json()
     return data
 
@@ -46,6 +47,7 @@ def getPlacework(puesto):
 def menu():
     flag=1
     while flag == 1:
+        os.system("cls")
         print(f"""
             --- Reportes ---
             
