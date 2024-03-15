@@ -1,15 +1,16 @@
 from tabulate import tabulate
 import json
-import storage.empleado as emp
-import modules.postEmployee as pstEmpl
 
-#-----
-#falta el def
-#-----
+def getAllData():
+    import requests
+    #json-server storage/empleado.json -b 5501
+    peticion = requests.get("http://192.168.0.11:5501")
+    data = peticion.json()
+    return data
 
 def getCodManager(codigoJefe):
     jefeCod = []
-    for val in emp.empleado:
+    for val in getAllData():
         if (val.get("codigo_jefe") == codigoJefe):
             addEmployee = ({
                 "nombre": val.get("nombre"),
@@ -21,7 +22,7 @@ def getCodManager(codigoJefe):
 
 def getManagerGeneral():
     jefeCod = []
-    for val in emp.empleado:
+    for val in getAllData():
         if (val.get("codigo_jefe") == None):
             jefeCod.append({
                 "cargo": val.get("puesto"),
@@ -33,7 +34,7 @@ def getManagerGeneral():
 
 def getPlacework(puesto):
     puestos = []
-    for val in emp.empleado:
+    for val in getAllData():
         if (val.get("puesto") == puesto):
             puestos.append({
                 "nombre": val.get("nombre"),
@@ -51,7 +52,6 @@ def menu():
             1. Obtener empleados por codigo de jefe
             2. Obtener datos del jefe actual
             3. Obtener empleados por puesto de trabajo
-            4. Anexar empleado
             0. Menu principal  
             """)
         
@@ -68,7 +68,7 @@ def menu():
             puesto = input("Escriba cargo del empleado: ")
             print(tabulate(getPlacework(puesto),headers="keys",tablefmt="github"))
             flag = int(input("Desea realizar otra consulta: 1=Si  0=No: "))
-        elif op == "4":
-            
         elif op == "0":
             return
+        else:
+            print("No es una opcion valida")

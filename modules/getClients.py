@@ -1,5 +1,13 @@
 from tabulate import tabulate
-import storage.cliente as cli
+import json
+
+
+def getAllData():
+    import requests
+    #json-server storage/cliente.json -b 5502
+    peticion = requests.get("http://192.168.0.11:5502")
+    data = peticion.json()
+    return data
 
 def getAllClienteName():
     clienteName = list()

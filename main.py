@@ -1,19 +1,43 @@
 import os
 import modules.getClients as cliente
 import modules.getOffice as office
-import modules.getEmployee as employee
+import modules.getEmployee as repoEmployee
+import modules.postEmployee as CRUDEmployee
 import modules.getOrder as order
-i
 
-def menuCliente():
+
+def menuEmpleado():
     flag = 1
     while flag == 1:
         os.system("clear")
         print(f"""
-            --- Bienvenido al menu de clientes ---
+            --- Bienvenido al menu de Empleado ---
             
             1. Reportes de clientes
             2. Guardar, actualizar y eliminar clientes
+            0. Regresar al menu principal
+            """)
+        
+        op = input("Seleccione una opcion: ")
+        
+        if op == "1":
+            repoEmployee.menu()
+        elif op == "2":    
+            CRUDEmployee.menu()
+        elif op == "0":
+            flag = 0    
+        else:
+            print("No es una opcion valida")
+
+def menuCliente():
+    flag = 1
+    while flag == 1:
+        os.system("cl")
+        print(f"""
+            --- Bienvenido al menu de empleado ---
+            
+            1. Reportes de clientes
+            2. Guardar, actualizar y eliminar empleados
             0. Regresar al menu principal
             """)
         
@@ -26,7 +50,7 @@ def menuCliente():
         elif op == "0":
             flag = 0    
         else:
-            print("No es una opcion valida")
+            print("No es una opcion valida")            
     
     
 if (__name__=="__main__"):
@@ -50,7 +74,7 @@ if (__name__=="__main__"):
         if op == "1":
             menuCliente()
         elif op == "2":    
-            employee.menu()
+            menuEmpleado()
         elif op == "3":    
             office.menu()
         elif op == "4":  

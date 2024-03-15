@@ -1,9 +1,10 @@
 import os
 import json
-import requests
+
 from tabulate import tabulate
 
 def postEmpleado():
+    import requests
     #json-server storage/empleado.json -b 5501
     newEmpleado = {
             "codigo_empleado": int(input("Codigo de empleado: ")),
@@ -17,7 +18,7 @@ def postEmpleado():
             "puesto": "Cargo: "    
         }
     
-    peticion = requests.post("http://172.16.100.112:5501", data=json.dumps(newEmpleado))
+    peticion = requests.post("http://192.168.0.11:5501", data=json.dumps(newEmpleado))
     res = peticion.json()
     res["Mensaje"] = "Empleado guardado"
     return [res] 
