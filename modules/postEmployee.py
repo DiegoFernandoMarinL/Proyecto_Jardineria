@@ -88,28 +88,14 @@ def postEmpleado():
                 else:
                     raise Exception("El codigo de oficina del empleado no cumple con el estandar establecido, no puede tener numeros")
             
-            peticion = requests.post("http://192.168.0.11:5501", data=json.dumps(newEmpleado))
+            peticion = requests.post("http://172.16.100.132:5501", data=json.dumps(newEmpleado))
             res = peticion.json()
             res["Mensaje"] = "Empleado guardado"
             return [res]
         
         except Exception as error:
             print(error)      
-                 
-            #newEmpleado = {
-            #"codigo_empleado": ,
-            #"nombre": ,
-            #"apellido1": input("Primer apellido: "),
-            #"apellido2": input("Segundo apellido: "),
-            #"extension": input("Extension: "),
-            #"email": input("Email: "),
-            #"codigo_oficina": input("Codigo oficina: "),
-            #"codigo_jefe": int(input("Codigo jefe: ")),
-            #"puesto": input("Cargo: ")    
-            #}
-
-         
-
+            
 def menu():
     flag = 1
     while flag == 1:

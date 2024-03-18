@@ -5,7 +5,7 @@ import requests
 
 def getAllData():
     #json-server storage/empleado.json -b 5501
-    peticion = requests.get("http://192.168.0.11:5501")
+    peticion = requests.get("http://172.16.100.132:5501")
     data = peticion.json()
     return data
 
@@ -23,11 +23,6 @@ def getEmployeeEmail(email):
     for val in getAllData():
         if(val.get("email") == email):
             return [val]        
-
-def getEmployeeCodOficina(codigoOficina):
-    for val in getAllData():
-        if(val.get("codigo_oficina") == codigoOficina):
-            return[val]
         
 def getCodManager(codigoJefe):
     jefeCod = []

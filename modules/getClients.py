@@ -1,6 +1,7 @@
 from tabulate import tabulate
 import json
-
+import os
+import requests
 
 def getAllData():
     import requests
@@ -9,9 +10,14 @@ def getAllData():
     data = peticion.json()
     return data
 
+def getClientsCodigo(codigo):
+    for val in getAllData():
+        if(val.get("codigo_cliente") == int(codigo)):
+            return [val]
+        
 def getAllClienteName():
     clienteName = list()
-    for val in cli.cliente:
+    for val in getAllData():
         codigoName = ({
             "codigo_cliente": val.get('codigo_cliente'),
             "nombre_cliente": val.get('nombre_cliente')
@@ -21,7 +27,7 @@ def getAllClienteName():
 
 def getOneClienteCodigo(codigo):
     client= list()
-    for val in cli.cliente:
+    for val in getAllData():
         if (val.get("codigo_cliente") == codigo):
             client.append({
                 "codigo_cliente": val.get('codigo_cliente'),
@@ -31,7 +37,7 @@ def getOneClienteCodigo(codigo):
         
 def getClientCredito(Credito):
     client = list()
-    for val in cli.cliente:
+    for val in getAllData():
         if (val.get("limite_credito") >= Credito):
              client.append({
                 "codigo_cliente": val.get('codigo_cliente'),
@@ -45,7 +51,7 @@ def getClientCredito(Credito):
 
 def getClientPaisCiudadRegion(pais, ciudad, region):
     client = list()
-    for val in cli.cliente:
+    for val in getAllData():
         if (val.get("pais") == pais and val.get("ciudad") == ciudad and val.get("region") == region):
             client.append({
                 "codigo_cliente": val.get('codigo_cliente'),
@@ -59,7 +65,7 @@ def getClientPaisCiudadRegion(pais, ciudad, region):
 
 def getClientPaisCredito(pais, credito):  
     clienteCompleto = list()
-    for val in cli.cliente:
+    for val in getAllData():
         if (val.get("pais") == pais and val.get("limite_credito") >= credito):
             clienteCompleto.append({
                 "codigo_cliente": val.get('codigo_cliente'),
@@ -71,7 +77,7 @@ def getClientPaisCredito(pais, credito):
 
 def getClientNameLetter(letraInicial):
     clienteName = list()
-    for val in cli.cliente:
+    for val in getAllData():
         nombreDataDividido = list(val.get("nombre_cliente"))
         if (nombreDataDividido[0] == letraInicial):
             codigoName = ({
@@ -84,7 +90,7 @@ def getClientNameLetter(letraInicial):
 
 def getCountry(pais):
     clientePais = list()
-    for i, val in enumerate(cli.cliente):
+    for i, val in enumerate(getAllData()):
         if (val.get("pais") == pais):
             clientePais.append({
                 "clave": i,
