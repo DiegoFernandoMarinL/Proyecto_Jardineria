@@ -1,15 +1,14 @@
 import os
 import modules.getClients as cliente
+import modules.getOrder as order
 import modules.getOffice as office
 import modules.getEmployee as repoEmployee
 import modules.postEmployee as CRUDEmployee
-import modules.getOrder as order
-
 
 def menuEmpleado():
     flag = 1
     while flag == 1:
-        os.system("clear")
+        os.system("cls")
         print(f"""
             --- Bienvenido al menu de Empleado ---
             
@@ -28,11 +27,12 @@ def menuEmpleado():
             flag = 0    
         else:
             print("No es una opcion valida")
+            input("Oprima una tecla para ingresar nueva opcion....")
 
 def menuCliente():
     flag = 1
     while flag == 1:
-        os.system("cl")
+        os.system("cls")
         print(f"""
             --- Bienvenido al menu de empleado ---
             
@@ -50,13 +50,14 @@ def menuCliente():
         elif op == "0":
             flag = 0    
         else:
-            print("No es una opcion valida")            
+            print("No es una opcion valida")  
+            input("Oprima una tecla para ingresar nueva opcion....")          
     
     
 if (__name__=="__main__"):
     flag = 1
     while flag == 1:
-        os.system("clear")
+        os.system("cls")
         print(f"""
             --- Menu Principal ---
             
@@ -90,6 +91,7 @@ if (__name__=="__main__"):
             flag = 0    
         else:
             print("No es una opcion valida")
+            input("Oprima una tecla para ingresar nueva opcion....")
                      
 
 

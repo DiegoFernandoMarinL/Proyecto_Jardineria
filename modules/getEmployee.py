@@ -5,10 +5,30 @@ import requests
 
 def getAllData():
     #json-server storage/empleado.json -b 5501
-    peticion = requests.get("http://172.16.106.162:5501")
+    peticion = requests.get("http://192.168.0.11:5501")
     data = peticion.json()
     return data
 
+def getEmployeeCodigo(codigo):
+    for val in getAllData():
+        if(val.get("codigo_empleado") == int(codigo)):
+            return [val]
+        
+def getEmployeeExtension(ext):
+    for val in getAllData():
+        if(val.get("extension") == ext):
+            return [val]        
+
+def getEmployeeEmail(email):
+    for val in getAllData():
+        if(val.get("email") == email):
+            return [val]        
+
+def getEmployeeCodOficina(codigoOficina):
+    for val in getAllData():
+        if(val.get("codigo_oficina") == codigoOficina):
+            return[val]
+        
 def getCodManager(codigoJefe):
     jefeCod = []
     for val in getAllData():
@@ -54,7 +74,7 @@ def menu():
             1. Obtener empleados por codigo de jefe
             2. Obtener datos del jefe actual
             3. Obtener empleados por puesto de trabajo
-            0. Menu principal  
+            0. Atras
             """)
         
         op = input("Seleccione una opcion: ")
