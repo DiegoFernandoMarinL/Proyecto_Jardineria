@@ -20,7 +20,7 @@ def postEmpleado():
                     else:
                         newClients["codigo_cliente"] = int(codigo)
                 else:
-                    raise Exception("El codigo de empleado no cumple con el estandar establecido, debe ser un numero")
+                    raise Exception("El codigo de cliente no cumple con el estandar establecido, debe ser un numero")
             #validacion nombre  
             if(not newClients.get("nombre_cliente")):
                 nombre = input("Nombre cliente /ej: GoldFish Garden/: ")
@@ -77,7 +77,7 @@ def postEmpleado():
                     ciudad = ciudad.title()
                     newClients["ciudad"] = ciudad
                 else:
-                    raise Exception("La ciudad del cliente no cumple con el estandar establecido, la primera debe ser en mayuscula")
+                    raise Exception("La ciudad del cliente no cumple con el estandar establecido, no puede ser vacio")
             #validacion region 
             if(not newClients.get("region")):
                 region = input("Region /ej: Santander/: ")
@@ -113,7 +113,7 @@ def postEmpleado():
                 else:
                     raise Exception("El limite de credito del cliente no cumple con el estandar establecido, debe contener solo numeros")
                                 
-            peticion = requests.post("http://192.168.1.39:5502", data=json.dumps(newClients))
+            peticion = requests.post("http://172.16.100.122:5502", data=json.dumps(newClients))
             res = peticion.json()
             res["Mensaje"] = "Empleado guardado"
             return [res]
