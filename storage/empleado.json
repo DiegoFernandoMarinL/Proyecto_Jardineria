@@ -375,5 +375,17 @@
         "codigo_jefe": 2,
         "puesto": "Operador",
         "id": 34
+    },
+    {
+        "codigo_empleado": 35,
+        "nombre": "Diego Fernando",
+        "apellido1": "Marin",
+        "apellido2": "Larrota",
+        "extension": "0987",
+        "email": "correo@gmail.com",
+        "codigo_oficina": "BUC-FL",
+        "codigo_jefe": 2,
+        "puesto": "Representante Ventas",
+        "id": 35
     }
 ]

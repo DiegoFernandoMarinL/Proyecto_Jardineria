@@ -1,9 +1,11 @@
 import os
-import modules.getClients as cliente
+import modules.getClients as repoCliente
+import modules.postClients as CRUDClient
 import modules.getOrder as order
 import modules.getOffice as office
 import modules.getEmployee as repoEmployee
 import modules.postEmployee as CRUDEmployee
+
 
 def menuEmpleado():
     flag = 1
@@ -12,8 +14,8 @@ def menuEmpleado():
         print(f"""
             --- Bienvenido al menu de Empleado ---
             
-            1. Reportes de clientes
-            2. Guardar, actualizar y eliminar clientes
+            1. Reportes de empleados
+            2. Guardar, actualizar y eliminar empleados
             0. Regresar al menu principal
             """)
         
@@ -34,19 +36,19 @@ def menuCliente():
     while flag == 1:
         os.system("cls")
         print(f"""
-            --- Bienvenido al menu de empleado ---
+            --- Bienvenido al menu de clientes ---
             
             1. Reportes de clientes
-            2. Guardar, actualizar y eliminar empleados
+            2. Guardar, actualizar y eliminar clientes
             0. Regresar al menu principal
             """)
         
         op = input("Seleccione una opcion: ")
         
         if op == "1":
-            cliente.menu()
+            repoCliente.menu()
         elif op == "2":    
-            employee.menu()
+            CRUDClient.menu()
         elif op == "0":
             flag = 0    
         else:

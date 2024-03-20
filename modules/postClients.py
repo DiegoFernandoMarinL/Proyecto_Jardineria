@@ -41,54 +41,79 @@ def postEmpleado():
                 if(re.match(r'^[A-Z][a-zA-Z]*(?: [A-Z][a-zA-Z]*)?$', apellido) is not None):
                     newClients["apellido_contacto"] = apellido
                 else:
-                    raise Exception("El apellido del empleado no cumple con el estandar establecido, debe contener la primera letra en mayuscula") 
+                    raise Exception("El apellido de contacto no cumple con el estandar establecido, debe contener la primera letra en mayuscula") 
             #validacion telefono
             if(not newClients.get("telefono")):
                 telefono = input("Telefono /ej: 1234567890/: ")
                 if(re.match(r'^\d{10}$', telefono) is not None):
-                    data = gCli.getEmployeeExtension(telefono)
-                    if (data):
-                        print(tabulate(data, headers="keys", tablefmt="github"))
-                        raise Exception("La extension de empleado ya existe")
-                    else:
-                        newClients["extension"] = ext
+                    newClients["telefono"] = telefono        
                 else:
-                    raise Exception("La extension del empleado no cumple con el estandar establecido, debe contener 4 numeros")                
-             #validacion email
-            if(not newClients.get("email")):
-                email = input("Email /ej: correo@gmail.com/: ")
-                if(re.match(r'.*@.*', email) is not None):
-                    data = gEmpl.getEmployeeEmail(email)
-                    if (data):
-                        print(tabulate(data, headers="keys", tablefmt="github"))
-                        raise Exception("El email del empleado ya existe")
-                    else:
-                        newClients["email"] = email
+                    raise Exception("El telefono del cliente no cumple con el estandar establecido, debe contener 10 numeros")                
+            #validacion fax
+            if(not newClients.get("fax")):
+                fax = input("Fax /ej: 1234567890/: ")
+                if(re.match(r'^\d{10}$', fax) is not None):
+                    newClients["fax"] = fax        
                 else:
-                    raise Exception("El email del empleado no cumple con el estandar establecido, debe contener @")                
-            #validacion codigo oficina
-            if(not newClients.get("codigo_oficina")):
-                codigoOficina = input("Codigo oficina /ej: ABC-DE/: ")
-                if(re.match(r'^[A-Z]{3}-[A-Z]{2}$', codigoOficina) is not None):
-                    newClients["codigo_oficina"] = codigoOficina
+                    raise Exception("El fax del cliente no cumple con el estandar establecido, debe contener 10 numeros")
+            #validacion linea direccion 1
+            if(not newClients.get("linea_direccion1")):
+                lineaDir1 = input("Direccion 1 /ej: Calle 1 #34/: ")
+                if(re.match(r'^\S+$', lineaDir1) is not None):
+                    newClients["linea_direccion1"] = lineaDir1
                 else:
-                    raise Exception("El codigo de oficina del empleado no cumple con el estandar establecido, debe contener cumplir el formato ABC_DE")                
-            #validacion codigo jefe
-            if(not newClients.get("codigo_jefe")):
-                codigoJefe = input("Codigo jefe /ej: 23/: ")
-                if(re.match(r'^[0-9]+$', codigoJefe) is not None):
-                    newClients["codigo_jefe"] = int(codigoJefe)
+                    raise Exception("La direccion del cliente no cumple con el estandar establecido, no puede ser vacio")                
+            #validacion linea direccion 2
+            if(not newClients.get("linea_direccion2")):
+                lineaDir2 = input("Direccion 2 /ej: Calle 1 #34/: ")
+                if(lineaDir2 != lineaDir1) is not None:
+                    newClients["linea_direccion2"] = lineaDir2
                 else:
-                    raise Exception("El codigo de oficina del empleado no cumple con el estandar establecido, debe ser un numero")
-            #validacion puesto
-            if(not newClients.get("puesto")):
-                puesto = input("Puesto o cargo /ej: Ingeniero/: ")
-                if(re.match(r'^\D*$', puesto) is not None):
-                    newClients["puesto"] = puesto
+                    raise Exception("La direccion 2 del cliente no puede ser igual que la direccion 2, de no tener dejar vacio")
+            #validacion ciudad
+            if(not newClients.get("ciudad")):
+                ciudad = input("Ciudad /ej: Bucaramanga/: ")
+                if(re.match(r'^\D*$', ciudad) is not None):
+                    ciudad = ciudad.title()
+                    newClients["ciudad"] = ciudad
                 else:
-                    raise Exception("El codigo de oficina del empleado no cumple con el estandar establecido, no puede tener numeros")
-            
-            peticion = requests.post("http://172.16.100.132:5501", data=json.dumps(newClients))
+                    raise Exception("La ciudad del cliente no cumple con el estandar establecido, la primera debe ser en mayuscula")
+            #validacion region 
+            if(not newClients.get("region")):
+                region = input("Region /ej: Santander/: ")
+                region = region.title()
+                newClients["region"] = region
+            #validacion pais
+            if(not newClients.get("pais")):
+                pais = input("Pais /ej: Colombia/: ")
+                if(re.match(r'^\D*$', pais) is not None):
+                    pais = pais.title()
+                    newClients["pais"] = pais
+                else:
+                    raise Exception("El pais del cliente no cumple con el estandar establecido, no puedo ser vacio")
+            #validacion codigo postal
+            if(not newClients.get("codigo_postal")):
+                codigoPostal = input("Codigo postal /ej: 170435/: ")
+                if(re.match(r"^[^a-zA-Z]+$", codigoPostal) is not None):
+                    newClients["codigo_postal"] = codigoPostal
+                else:
+                    raise Exception("El codigo postal del cliente no cumple con el estandar establecido, debe contener solo numeros")
+            #validacion codigo empleado rep ventas
+            if(not newClients.get("codigo_empleado_rep_ventas")):
+                codigoEmpleadoRepVentas = input("Codigo empleado representane de ventas /ej: 19/: ")
+                if(re.match(r"^[^a-zA-Z]+$", codigoEmpleadoRepVentas) is not None):
+                    newClients["codigo_empleado_rep_ventas"] = int(codigoEmpleadoRepVentas)
+                else:
+                    raise Exception("El codigo empleado rep de ventas del cliente no cumple con el estandar establecido, debe contener solo numeros")
+            #validacion limite credito
+            if(not newClients.get("limite_credito")):
+                limiteCredito = input("Limite de credito /ej: 3000/: ")
+                if(re.match(r"^[^a-zA-Z]+$", limiteCredito) is not None):
+                    newClients["limite_credito"] = int(limiteCredito)
+                else:
+                    raise Exception("El limite de credito del cliente no cumple con el estandar establecido, debe contener solo numeros")
+                                
+            peticion = requests.post("http://192.168.1.39:5502", data=json.dumps(newClients))
             res = peticion.json()
             res["Mensaje"] = "Empleado guardado"
             return [res]
@@ -101,7 +126,7 @@ def menu():
     while flag == 1:
         os.system("cls")
         print(f"""
-            --- Administrar datos de empleado ---
+            --- Administrar datos de cliente ---
             
             1. Guardar un cliente nuevo
             0. Atras

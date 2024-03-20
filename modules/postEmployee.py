@@ -54,7 +54,7 @@ def postEmpleado():
                         newEmpleado["extension"] = ext
                 else:
                     raise Exception("La extension del empleado no cumple con el estandar establecido, debe contener 4 numeros")                
-             #validacion email
+            #validacion email
             if(not newEmpleado.get("email")):
                 email = input("Email /ej: correo@gmail.com/: ")
                 if(re.match(r'.*@.*', email) is not None):
@@ -88,7 +88,7 @@ def postEmpleado():
                 else:
                     raise Exception("El codigo de oficina del empleado no cumple con el estandar establecido, no puede tener numeros")
             
-            peticion = requests.post("http://172.16.100.132:5501", data=json.dumps(newEmpleado))
+            peticion = requests.post("http://172.16.106.195:5501", data=json.dumps(newEmpleado))
             res = peticion.json()
             res["Mensaje"] = "Empleado guardado"
             return [res]
@@ -103,7 +103,7 @@ def menu():
         print(f"""
             --- Administrar datos de empleado ---
             
-            1. Guardar un cliente nuevo
+            1. Guardar un empleado nuevo
             0. Atras
             """)
         

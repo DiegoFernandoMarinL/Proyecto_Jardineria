@@ -6,7 +6,7 @@ import requests
 def getAllData():
     import requests
     #json-server storage/cliente.json -b 5502
-    peticion = requests.get("http://192.168.0.11:5502")
+    peticion = requests.get("http://192.168.1.39:5502")
     data = peticion.json()
     return data
 
@@ -16,7 +16,7 @@ def getClientsCodigo(codigo):
             return [val]
         
 def getAllClienteName():
-    clienteName = list()
+    clienteName = []
     for val in getAllData():
         codigoName = ({
             "codigo_cliente": val.get('codigo_cliente'),
@@ -26,17 +26,22 @@ def getAllClienteName():
     return clienteName        
 
 def getOneClienteCodigo(codigo):
-    client= list()
-    for val in getAllData():
-        if (val.get("codigo_cliente") == codigo):
-            client.append({
-                "codigo_cliente": val.get('codigo_cliente'),
-                "nombre_cliente": val.get('nombre_cliente')
-            })
-    return client        
+    client = []
+    while True:
+        for val in getAllData():
+            if (val.get("codigo_cliente") == codigo):
+                client.append({
+                    "codigo_cliente": val.get('codigo_cliente'),
+                    "nombre_cliente": val.get('nombre_cliente')
+                })
+        if (not client):
+            print("Codigo de cliente no encontrado")
+            break
+        else:    
+            return client       
         
 def getClientCredito(Credito):
-    client = list()
+    client = []
     for val in getAllData():
         if (val.get("limite_credito") >= Credito):
              client.append({
@@ -50,7 +55,7 @@ def getClientCredito(Credito):
     return client
 
 def getClientPaisCiudadRegion(pais, ciudad, region):
-    client = list()
+    client = []
     for val in getAllData():
         if (val.get("pais") == pais and val.get("ciudad") == ciudad and val.get("region") == region):
             client.append({
@@ -64,7 +69,7 @@ def getClientPaisCiudadRegion(pais, ciudad, region):
     return client 
 
 def getClientPaisCredito(pais, credito):  
-    clienteCompleto = list()
+    clienteCompleto = []
     for val in getAllData():
         if (val.get("pais") == pais and val.get("limite_credito") >= credito):
             clienteCompleto.append({
@@ -76,7 +81,7 @@ def getClientPaisCredito(pais, credito):
     return clienteCompleto        
 
 def getClientNameLetter(letraInicial):
-    clienteName = list()
+    clienteName = []
     for val in getAllData():
         nombreDataDividido = list(val.get("nombre_cliente"))
         if (nombreDataDividido[0] == letraInicial):
@@ -89,7 +94,7 @@ def getClientNameLetter(letraInicial):
     return clienteName 
 
 def getCountry(pais):
-    clientePais = list()
+    clientePais = []
     for i, val in enumerate(getAllData()):
         if (val.get("pais") == pais):
             clientePais.append({
