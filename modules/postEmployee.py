@@ -88,7 +88,7 @@ def postEmpleado():
                 else:
                     raise Exception("El codigo de oficina del empleado no cumple con el estandar establecido, no puede tener numeros")
             
-            peticion = requests.post("http://172.16.106.195:5501", data=json.dumps(newEmpleado))
+            peticion = requests.post("http://192.168.1.39:5501", data=json.dumps(newEmpleado))
             res = peticion.json()
             res["Mensaje"] = "Empleado guardado"
             return [res]
@@ -96,6 +96,19 @@ def postEmpleado():
         except Exception as error:
             print(error)      
             
+def deleteEmployee():
+    print(tabulate(gEmpl.getAllData(),headers="keys", tablefmt="github"))
+    id = input("Ingrese el id que desea eliminar: ")
+    data = gEmpl.getIdEmployee(id)
+    if(len(data)):
+        peticion = requests.delete(f"http://192.168.1.39:5501/{id}")
+        if(peticion.status_code == 204):
+            return("Empleado eliminado correctamente")
+        else:
+            return peticion.status_code
+    else:
+        return("Empleado no encontrado")
+    
 def menu():
     flag = 1
     while flag == 1:
@@ -103,7 +116,8 @@ def menu():
         print(f"""
             --- Administrar datos de empleado ---
             
-            1. Guardar un empleado nuevo
+            1. Guardar empleado nuevo
+            2. Eliminar empleado
             0. Atras
             """)
         
@@ -112,6 +126,9 @@ def menu():
         if op == "1":
             print(tabulate(postEmpleado(),headers="keys", tablefmt="github"))
             input("Oprima una tecla para ingresar nueva opcion....")
+        elif op == "2":
+            print(deleteEmployee())
+            input("Oprima una tecla para ingresar nueva opcion....")    
         elif op == "0":
             flag = 0    
         else:

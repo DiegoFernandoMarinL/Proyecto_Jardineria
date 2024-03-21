@@ -59,7 +59,7 @@ def postEmpleado():
             #validacion linea direccion 1
             if(not newClients.get("linea_direccion1")):
                 lineaDir1 = input("Direccion 1 /ej: Calle 1 #34/: ")
-                if(re.match(r'^\S+$', lineaDir1) is not None):
+                if(re.match(r"^(?=\S{5,}).+$", lineaDir1) is not None):
                     newClients["linea_direccion1"] = lineaDir1
                 else:
                     raise Exception("La direccion del cliente no cumple con el estandar establecido, no puede ser vacio")                
@@ -73,11 +73,11 @@ def postEmpleado():
             #validacion ciudad
             if(not newClients.get("ciudad")):
                 ciudad = input("Ciudad /ej: Bucaramanga/: ")
-                if(re.match(r'^\D*$', ciudad) is not None):
+                if(re.match(r'^\D+$', ciudad) is not None):
                     ciudad = ciudad.title()
                     newClients["ciudad"] = ciudad
                 else:
-                    raise Exception("La ciudad del cliente no cumple con el estandar establecido, no puede ser vacio")
+                    raise Exception("La ciudad del cliente no cumple con el estandar establecido, no puede ser vacio ni contener numeros")
             #validacion region 
             if(not newClients.get("region")):
                 region = input("Region /ej: Santander/: ")
@@ -86,11 +86,11 @@ def postEmpleado():
             #validacion pais
             if(not newClients.get("pais")):
                 pais = input("Pais /ej: Colombia/: ")
-                if(re.match(r'^\D*$', pais) is not None):
+                if(re.match(r'^\D+$', pais) is not None):
                     pais = pais.title()
                     newClients["pais"] = pais
                 else:
-                    raise Exception("El pais del cliente no cumple con el estandar establecido, no puedo ser vacio")
+                    raise Exception("El pais del cliente no cumple con el estandar establecido, no puedo ser vacio ni contener numeros")
             #validacion codigo postal
             if(not newClients.get("codigo_postal")):
                 codigoPostal = input("Codigo postal /ej: 170435/: ")
@@ -113,14 +113,27 @@ def postEmpleado():
                 else:
                     raise Exception("El limite de credito del cliente no cumple con el estandar establecido, debe contener solo numeros")
                                 
-            peticion = requests.post("http://172.16.100.122:5502", data=json.dumps(newClients))
+            peticion = requests.post("http://192.168.1.39:5502", data=json.dumps(newClients))
             res = peticion.json()
             res["Mensaje"] = "Empleado guardado"
             return [res]
         
         except Exception as error:
             print(error)      
-            
+
+def deleteClient():
+    print(tabulate(gCli.getAllData(),headers="keys", tablefmt="github"))
+    id = input("Ingrese el id que desea eliminar: ")
+    data = gCli.getIdOffice(id)
+    if(len(data)):
+        peticion = requests.delete(f"http://192.168.1.39:5502/{id}")
+        if(peticion.status_code == 204):
+            return("Cliente eliminado correctamente")
+        else:
+            return peticion.status_code
+    else:
+        return("Cliente no encontrado")
+                
 def menu():
     flag = 1
     while flag == 1:
@@ -129,6 +142,7 @@ def menu():
             --- Administrar datos de cliente ---
             
             1. Guardar un cliente nuevo
+            2. Eliminar cliente
             0. Atras
             """)
         
@@ -136,6 +150,9 @@ def menu():
         
         if op == "1":
             print(tabulate(postEmpleado(),headers="keys", tablefmt="github"))
+            input("Oprima una tecla para ingresar nueva opcion....")
+        elif op == "2":
+            print(deleteClient())
             input("Oprima una tecla para ingresar nueva opcion....")
         elif op == "0":
             flag = 0    

@@ -1,11 +1,36 @@
 import os
-import modules.getClients as repoCliente
-import modules.postClients as CRUDClient
 import modules.getOrder as order
 import modules.getOffice as office
+import modules.getClients as repoCliente
+import modules.postClients as CRUDClient
 import modules.getEmployee as repoEmployee
 import modules.postEmployee as CRUDEmployee
+import modules.getOffice as repoOffice
+import modules.postOffice as CRUDOffice
 
+def menuOficina():
+    flag = 1
+    while flag == 1:
+        os.system("cls")
+        print(f"""
+            --- Bienvenido al menu de Oficina ---
+            
+            1. Reportes de oficinas
+            2. Guardar, actualizar y eliminar oficinas
+            0. Regresar al menu principal
+            """)
+        
+        op = input("Seleccione una opcion: ")
+        
+        if op == "1":
+            repoOffice.menu()
+        elif op == "2":    
+            CRUDOffice.menu()
+        elif op == "0":
+            flag = 0    
+        else:
+            print("No es una opcion valida")
+            input("Oprima una tecla para ingresar nueva opcion....")
 
 def menuEmpleado():
     flag = 1
@@ -55,7 +80,6 @@ def menuCliente():
             print("No es una opcion valida")  
             input("Oprima una tecla para ingresar nueva opcion....")          
     
-    
 if (__name__=="__main__"):
     flag = 1
     while flag == 1:
@@ -79,7 +103,7 @@ if (__name__=="__main__"):
         elif op == "2":    
             menuEmpleado()
         elif op == "3":    
-            office.menu()
+            menuOficina()
         elif op == "4":  
             print("falta anexar")
             #cliente.menu()  

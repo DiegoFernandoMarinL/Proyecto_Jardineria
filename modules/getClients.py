@@ -6,9 +6,13 @@ import requests
 def getAllData():
     import requests
     #json-server storage/cliente.json -b 5502
-    peticion = requests.get("http://172.16.100.122:5502")
+    peticion = requests.get("http://192.168.1.39:5502")
     data = peticion.json()
     return data
+
+def getIdOffice(id):
+    peticion = requests.get(f"http://192.168.1.39:5502/{id}") 
+    return [peticion.json()] if peticion.ok else []  
 
 def getClientsCodigo(codigo):
     for val in getAllData():
@@ -107,6 +111,7 @@ def getCountry(pais):
 def menu():
     flag=1
     while flag == 1:
+        os.system("cls")
         print(f"""
             --- Reportes ---
             

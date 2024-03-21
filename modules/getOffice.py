@@ -4,9 +4,8 @@ import os
 import requests
 
 def getAllData():
-    import requests
     #json-server storage/oficina.json -b 5503
-    peticion = requests.get("http://172.16.100.122:5503")
+    peticion = requests.get("http://192.168.1.39:5503")
     data = peticion.json()
     return data
 
@@ -14,7 +13,11 @@ def getOfficeCodigo(codigo):
     for val in getAllData():
         if(val.get("codigo_oficina") == codigo):
             return [val]
-        
+                
+def getIdOffice(id):
+    peticion = requests.get(f"http://192.168.1.39:5503/{id}") 
+    return [peticion.json()] if peticion.ok else []              
+
 def getOfficeCity(pais):
     cityOffice = []
     for val in getAllData():
@@ -30,11 +33,11 @@ def getOfficeCity(pais):
 def menu():
     flag=1
     while flag == 1:
+        os.system("cls")
         print(f"""
             --- Reportes ---
             
             1. Obtener oficinas por pais
-            2. ....
             0. Menu principal  
             """)
         

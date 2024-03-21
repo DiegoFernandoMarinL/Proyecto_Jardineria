@@ -12,7 +12,7 @@ def postOffice():
             #Validacion codigo oficina
             if(not newOffice.get("codigo_oficina")):
                 codigo = input("Codigo de oficina /ej: ABC-DE/: ")
-                if(re.match(r'^[A-Z]{3}_[A-Z]{2}$', codigo) is not None):
+                if(re.match(r'^[A-Z]{3}-[A-Z]{2}$', codigo) is not None):
                     data = gOff.getOfficeCodigo(codigo)
                     if (data):
                         print(tabulate(data, headers="keys", tablefmt="github"))
@@ -24,19 +24,19 @@ def postOffice():
             #validacion ciudad
             if(not newOffice.get("ciudad")):
                 ciudad = input("Ciudad /ej: Bucaramanga/: ")
-                if(re.match(r'^\D*$', ciudad) is not None):
+                if(re.match(r'^\D+$', ciudad) is not None):
                     ciudad = ciudad.title()
                     newOffice["ciudad"] = ciudad
                 else:
-                    raise Exception("La ciudad de la oficina no cumple con el estandar establecido, no puede ser vacio")
+                    raise Exception("La ciudad de la oficina no cumple con el estandar establecido, no puede ser vacio ni contener numeros")
             #validacion pais
             if(not newOffice.get("pais")):
                 pais = input("Pais /ej: Colombia/: ")
-                if(re.match(r'^\D*$', pais) is not None):
+                if(re.match(r'^\D+$', pais) is not None):
                     pais = pais.title()
                     newOffice["pais"] = pais
                 else:
-                    raise Exception("El pais de la oficina no cumple con el estandar establecido, no puedo ser vacio")
+                    raise Exception("El pais de la oficina no cumple con el estandar establecido, no puedo ser vacio ni contener numeros")
             #validacion region 
             if(not newOffice.get("region")):
                 region = input("Region /ej: Santander/: ")
@@ -59,34 +59,48 @@ def postOffice():
             #validacion linea direccion 1
             if(not newOffice.get("linea_direccion1")):
                 lineaDir1 = input("Direccion 1 /ej: Calle 1 #34/: ")
-                if(re.match(r'^\S+$', lineaDir1) is not None):
+                if(re.match(r"^(?=\S{5,}).+$", lineaDir1) is not None):
                     newOffice["linea_direccion1"] = lineaDir1
                 else:
-                    raise Exception("La direccion del cliente no cumple con el estandar establecido, no puede ser vacio")                
+                    raise Exception("La direccion de la oficina no cumple con el estandar establecido, no puede ser vacio")                
             #validacion linea direccion 2
             if(not newOffice.get("linea_direccion2")):
                 lineaDir2 = input("Direccion 2 /ej: Calle 1 #34/: ")
                 if(lineaDir2 != lineaDir1) is not None:
                     newOffice["linea_direccion2"] = lineaDir2
                 else:
-                    raise Exception("La direccion 2 del cliente no puede ser igual que la direccion 2, de no tener dejar vacio")
+                    raise Exception("La direccion 2 de la oficina no puede ser igual que la direccion 2, de no tener dejar vacio")
                                 
-            peticion = requests.post("http://172.16.100.122:5503", data=json.dumps(newOffice))
+            peticion = requests.post("http://192.168.1.39:5503", data=json.dumps(newOffice))
             res = peticion.json()
             res["Mensaje"] = "Oficina guardada"
             return [res]
         
         except Exception as error:
             print(error)      
-            
+
+def deleteOffice():
+    print(tabulate(gOff.getAllData(),headers="keys", tablefmt="github"))
+    id = input("Ingrese el id que desea eliminar: ")
+    data = gOff.getIdOffice(id)
+    if(len(data)):
+        peticion = requests.delete(f"http://192.168.1.39:5503/{id}")
+        if(peticion.status_code == 204):
+            return("Oficina eliminada correctamente")
+        else:
+            return peticion.status_code
+    else:
+        return("Oficina no encontrada")
+               
 def menu():
     flag = 1
     while flag == 1:
         os.system("cls")
         print(f"""
-            --- Administrar datos de cliente ---
+            --- Administrar datos de oficina ---
             
-            1. Guardar un oficina nueva
+            1. Guardar oficina nueva
+            2. Eliminar nueva oficina   
             0. Atras
             """)
         
@@ -94,6 +108,9 @@ def menu():
         
         if op == "1":
             print(tabulate(postOffice(),headers="keys", tablefmt="github"))
+            input("Oprima una tecla para ingresar nueva opcion....")
+        elif op == "2":
+            print(deleteOffice())
             input("Oprima una tecla para ingresar nueva opcion....")
         elif op == "0":
             flag = 0    

@@ -5,9 +5,13 @@ import requests
 
 def getAllData():
     #json-server storage/empleado.json -b 5501
-    peticion = requests.get("http://172.16.106.195:5501")
+    peticion = requests.get("http://192.168.1.39:5501")
     data = peticion.json()
     return data
+
+def getIdEmployee(id):
+    peticion = requests.get(f"http://192.168.1.39:5501/{id}") 
+    return [peticion.json()] if peticion.ok else []  
 
 def getEmployeeCodigo(codigo):
     for val in getAllData():
