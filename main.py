@@ -8,6 +8,30 @@ import modules.postEmployee as CRUDEmployee
 import modules.getOffice as repoOffice
 import modules.postOffice as CRUDOffice
 
+# def menuProducto():
+#     flag = 1
+#     while flag == 1:
+#         os.system("cls")
+#         print(f"""
+#             --- Bienvenido al menu de producto ---
+            
+#             1. Reportes de productos
+#             2. Guardar, actualizar y eliminar prodcutos
+#             0. Regresar al menu principal
+#             """)
+        
+#         op = input("Seleccione una opcion: ")
+        
+#         if op == "1":
+#             repoProduct.menu()
+#         elif op == "2":    
+#             CRUDProduct.menu()
+#         elif op == "0":
+#             flag = 0    
+#         else:
+#             print("No es una opcion valida")
+#             input("Oprima una tecla para ingresar nueva opcion....")
+
 def menuOficina():
     flag = 1
     while flag == 1:
@@ -109,8 +133,8 @@ if (__name__=="__main__"):
             #cliente.menu()  
         elif op == "5":    
             order.menu()
-        elif op == "6":    
-            print("falta anexar")
+        elif op == "6":   
+            menuProducto()
             #cliente.menu()
         elif op == "0":
             print("Gracias por utilizar el programa")

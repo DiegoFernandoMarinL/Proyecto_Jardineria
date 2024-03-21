@@ -88,10 +88,16 @@ def postEmpleado():
                 else:
                     raise Exception("El codigo de oficina del empleado no cumple con el estandar establecido, no puede tener numeros")
             
-            peticion = requests.post("http://192.168.1.39:5501", data=json.dumps(newEmpleado))
+            peticion = requests.post("http://154.38.171.54:5003/empleados", data=json.dumps(newEmpleado))
             res = peticion.json()
             res["Mensaje"] = "Empleado guardado"
             return [res]
+            
+            #LOCAL
+            # peticion = requests.post("http://192.168.1.39:5501", data=json.dumps(newEmpleado))
+            # res = peticion.json()
+            # res["Mensaje"] = "Empleado guardado"
+            # return [res]
         
         except Exception as error:
             print(error)      
@@ -101,8 +107,10 @@ def deleteEmployee():
     id = input("Ingrese el id que desea eliminar: ")
     data = gEmpl.getIdEmployee(id)
     if(len(data)):
-        peticion = requests.delete(f"http://192.168.1.39:5501/{id}")
-        if(peticion.status_code == 204):
+        peticion = requests.delete(f"http://154.38.171.54:5003/empleados/{id}")
+        # LOCAL
+        # peticion = requests.delete(f"http://192.168.1.39:5501/{id}")
+        if(peticion.status_code == 204 or peticion.status_code == 200):
             return("Empleado eliminado correctamente")
         else:
             return peticion.status_code

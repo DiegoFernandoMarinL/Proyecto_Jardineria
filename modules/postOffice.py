@@ -70,11 +70,16 @@ def postOffice():
                     newOffice["linea_direccion2"] = lineaDir2
                 else:
                     raise Exception("La direccion 2 de la oficina no puede ser igual que la direccion 2, de no tener dejar vacio")
-                                
-            peticion = requests.post("http://192.168.1.39:5503", data=json.dumps(newOffice))
+
+            peticion = requests.post("http://154.38.171.54:5005/oficinas", data=json.dumps(newOffice))
             res = peticion.json()
             res["Mensaje"] = "Oficina guardada"
             return [res]
+            #LOCAL                    
+            # peticion = requests.post("http://192.168.1.39:5503", data=json.dumps(newOffice))
+            # res = peticion.json()
+            # res["Mensaje"] = "Oficina guardada"
+            # return [res]
         
         except Exception as error:
             print(error)      
@@ -84,8 +89,10 @@ def deleteOffice():
     id = input("Ingrese el id que desea eliminar: ")
     data = gOff.getIdOffice(id)
     if(len(data)):
-        peticion = requests.delete(f"http://192.168.1.39:5503/{id}")
-        if(peticion.status_code == 204):
+        peticion = requests.delete(f"http://154.38.171.54:5005/oficinas/{id}")
+        #LOCAL
+        #peticion = requests.delete(f"http://192.168.1.39:5503/{id}")
+        if(peticion.status_code == 204 or peticion.status_code == 200):
             return("Oficina eliminada correctamente")
         else:
             return peticion.status_code

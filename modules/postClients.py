@@ -112,11 +112,16 @@ def postEmpleado():
                     newClients["limite_credito"] = int(limiteCredito)
                 else:
                     raise Exception("El limite de credito del cliente no cumple con el estandar establecido, debe contener solo numeros")
-                                
-            peticion = requests.post("http://192.168.1.39:5502", data=json.dumps(newClients))
+
+            peticion = requests.post("http://154.38.171.54:5001/cliente", data=json.dumps(newClients))
             res = peticion.json()
             res["Mensaje"] = "Empleado guardado"
             return [res]
+            # LOCAL                    
+            # peticion = requests.post("http://192.168.1.39:5502", data=json.dumps(newClients))
+            # res = peticion.json()
+            # res["Mensaje"] = "Empleado guardado"
+            # return [res]
         
         except Exception as error:
             print(error)      
@@ -126,8 +131,8 @@ def deleteClient():
     id = input("Ingrese el id que desea eliminar: ")
     data = gCli.getIdOffice(id)
     if(len(data)):
-        peticion = requests.delete(f"http://192.168.1.39:5502/{id}")
-        if(peticion.status_code == 204):
+        peticion = requests.delete(f"http://154.38.171.54:5001/cliente/{id}")
+        if(peticion.status_code == 204 or peticion.status_code == 200):
             return("Cliente eliminado correctamente")
         else:
             return peticion.status_code

@@ -4,30 +4,36 @@ import os
 import requests
 
 def getAllData():
-    #json-server storage/empleado.json -b 5501
-    peticion = requests.get("http://192.168.1.39:5501")
+    peticion = requests.get("http://154.38.171.54:5003/empleados")
     data = peticion.json()
     return data
 
+#LOCAL
+#def getAllData():
+#     #json-server storage/empleado.json -b 5501
+#     peticion = requests.get("http://192.168.1.39:5501")
+#     data = peticion.json()
+#     return data
+
 def getIdEmployee(id):
-    peticion = requests.get(f"http://192.168.1.39:5501/{id}") 
-    return [peticion.json()] if peticion.ok else []  
+    peticion = requests.get(f"http://154.38.171.54:5003/empleados/{id}")
+    return [peticion.json()] if peticion.ok else []
 
 def getEmployeeCodigo(codigo):
     for val in getAllData():
         if(val.get("codigo_empleado") == int(codigo)):
             return [val]
-        
+
 def getEmployeeExtension(ext):
     for val in getAllData():
         if(val.get("extension") == ext):
-            return [val]        
+            return [val]
 
 def getEmployeeEmail(email):
     for val in getAllData():
         if(val.get("email") == email):
-            return [val]        
-        
+            return [val]
+
 def getCodManager(codigoJefe):
     jefeCod = []
     for val in getAllData():
@@ -35,9 +41,9 @@ def getCodManager(codigoJefe):
             addEmployee = ({
                 "nombre": val.get("nombre"),
                 "apellidos": f'{val.get("apellido1")} {val.get("apellido2")}',
-                "email": val.get("email")    
-            })  
-            jefeCod.append(addEmployee)  
+                "email": val.get("email")
+            })
+            jefeCod.append(addEmployee)
     return jefeCod
 
 def getManagerGeneral():
@@ -48,7 +54,7 @@ def getManagerGeneral():
                 "cargo": val.get("puesto"),
                 "nombre": val.get("nombre"),
                 "apellidos": f'{val.get("apellido1")} {val.get("apellido2")}',
-                "email": val.get("email")     
+                "email": val.get("email")
             })
     return jefeCod
 
@@ -59,9 +65,9 @@ def getPlacework(puesto):
             puestos.append({
                 "nombre": val.get("nombre"),
                 "apellidos": f'{val.get("apellido1")} {val.get("apellido2")}',
-                "cargo": val.get("puesto") 
-            })  
-    return puestos         
+                "cargo": val.get("puesto")
+            })
+    return puestos
 
 def menu():
     flag=1
@@ -69,19 +75,19 @@ def menu():
         os.system("cls")
         print(f"""
             --- Reportes ---
-            
+
             1. Obtener empleados por codigo de jefe
             2. Obtener datos del jefe actual
             3. Obtener empleados por puesto de trabajo
             0. Atras
             """)
-        
+
         op = input("Seleccione una opcion: ")
-        
+
         if op == "1":
             codigoJefe = int(input("Digite codigo del jefe: "))
             print(tabulate(getCodManager(codigoJefe),headers="keys",tablefmt="github"))
-            flag = int(input("Desea realizar otra consulta: 1=Si  0=No: ")) 
+            flag = int(input("Desea realizar otra consulta: 1=Si  0=No: "))
         elif op == "2":
             print(tabulate(getManagerGeneral(),headers="keys",tablefmt="github"))
             flag = int(input("Desea realizar otra consulta: 1=Si  0=No: "))

@@ -4,15 +4,23 @@ import os
 import requests
 
 def getAllData():
-    import requests
-    #json-server storage/cliente.json -b 5502
-    peticion = requests.get("http://192.168.1.39:5502")
+    peticion = requests.get("http://154.38.171.54:5001/cliente")
     data = peticion.json()
     return data
 
+    #LOCAL
+    #json-server storage/cliente.json -b 5502
+    # peticion = requests.get("http://192.168.1.39:5502")
+    # data = peticion.json()
+    # return data
+
 def getIdOffice(id):
-    peticion = requests.get(f"http://192.168.1.39:5502/{id}") 
-    return [peticion.json()] if peticion.ok else []  
+    peticion = requests.get(f"http://154.38.171.54:5001/cliente/{id}") 
+    return [peticion.json()] if peticion.ok else []
+    
+    #LOCAL
+    # peticion = requests.get(f"http://192.168.1.39:5502/{id}") 
+    # return [peticion.json()] if peticion.ok else []  
 
 def getClientsCodigo(codigo):
     for val in getAllData():
